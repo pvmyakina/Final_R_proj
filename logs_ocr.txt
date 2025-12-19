@@ -1,0 +1,45 @@
+> source("R/01_ocr.R")
+Using poppler version 24.02.0
+OCR: English Short Stories for Intermediate Learners-11
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_2844643603290/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-12
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_28446b619266/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-14
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_28446548273f5/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-18
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_2844611af32ee/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-29
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_28446180788d2/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-30
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_2844664fd532e/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-31
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_284461402dc7d/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-32
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_284465b02cf9/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-34
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_2844669ebdc51/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-35
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_2844633cb8eb1/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-36
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_284464fa228a7/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-37
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_2844673556f76/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-38
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_284462e14247e/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-39
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_28446683dc810/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-41
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_284465265c579/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-42
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_28446272e54d/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-43
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_2844641612d5d/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-44
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_28446243be8d3/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-45
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_2844665f2064b/page1.png... done!
+OCR: English Short Stories for Intermediate Learners-9
+Converting page 1 to /tmp/Rtmpc7fgyZ/pdfimg_28446273ae8ea/page1.png... done!
+There were 20 warnings (use warnings() to see them)
+> 
+> 

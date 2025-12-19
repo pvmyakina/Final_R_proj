@@ -1,0 +1,25 @@
+> source("R/03_udpipe.R")
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /root/r/english-ewt-ud-2.5-191206.udpipe
+ - This model has been trained on version 2.5 of data from https://universaldependencies.org
+ - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0
+ - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.
+ - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')
+trying URL 'https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe'
+Content type 'application/octet-stream' length 16309608 bytes (15.6 MB)
+==================================================
+downloaded 15.6 MB
+
+Downloading finished, model stored at '/root/r/english-ewt-ud-2.5-191206.udpipe'
+> 
+> 
