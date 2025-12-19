@@ -27,8 +27,8 @@ anno <- as.data.frame(anno)
 write_csv(anno, file.path(dir_out_t, "udpipe_tokens.csv"))
 
 freq_total <- anno %>%
-  filter(!is.na<lemma), upos != "PUNCT") %>%
-  mutate(lemma = str_to_lower<lemma)) %>%
+  filter(!is.na(lemma), upos != "PUNCT") %>%
+  mutate(lemma = str_to_lower(lemma)) %>%
   count(lemma, sort = TRUE)
 
 write_csv(freq_total, file.path(dir_out_t, "lemma_freq_total.csv"))
@@ -36,8 +36,8 @@ write_csv(freq_total %>% slice_head(n = 50),
           file.path(dir_out_t, "lemma_freq_top50.csv"))
 
 freq_by_doc <- anno %>%
-  filter(!is.na<lemma), upos != "PUNCT") %>%
-  mutate(lemma = str_to_lower<lemma)) %>%
+  filter(!is.na(lemma), upos != "PUNCT") %>%
+  mutate(lemma = str_to_lower(lemma)) %>%
   count(doc_id, lemma, sort = TRUE) %>%
   group_by(doc_id) %>%
   slice_head(n = 20) %>%
