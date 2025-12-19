@@ -1,0 +1,51 @@
+[
+  {
+    "objectID": "index.html#что-это-за-работа",
+    "href": "index.html#что-это-за-работа",
+    "title": "Итоговый проект — Вариант 1: корпусный анализ с визуализацией",
+    "section": "Что это за работа",
+    "text": "Что это за работа\nЯ собрала небольшой корпус текстов на европейском языке (английский): 20 одностраничных PDF-документов.\nДальше я сделала пайплайн: OCR → очистка → лемматизация и частоты → коллокации и визуализация → отчёт в Quarto."
+  },
+  {
+    "objectID": "index.html#данные-и-структура-проекта",
+    "href": "index.html#данные-и-структура-проекта",
+    "title": "Итоговый проект — Вариант 1: корпусный анализ с визуализацией",
+    "section": "Данные и структура проекта",
+    "text": "Данные и структура проекта\n\nДокументов: 20\nЯзык: английский\nФормат исходников: PDF (1 страница на документ)\n\nПапки проекта:\n\ndata_raw/ — исходные PDF\n\ndata_ocr/ — результат OCR (.txt)\n\ndata_clean/ — очищенные тексты (.txt)\n\noutputs/tables/ — таблицы со статистикой\n\noutputs/figures/ — картинки (графики/сеть)\n\nR/ — скрипты пайплайна"
+  },
+  {
+    "objectID": "index.html#шаг-1.-ocr-tesseract",
+    "href": "index.html#шаг-1.-ocr-tesseract",
+    "title": "Итоговый проект — Вариант 1: корпусный анализ с визуализацией",
+    "section": "Шаг 1. OCR (tesseract)",
+    "text": "Шаг 1. OCR (tesseract)\nДля каждого PDF я делала так:\n\nКонвертировала страницу PDF в PNG (300 dpi).\n\nРаспознавала текст через tesseract.\n\nНа выходе получилось 20 файлов в data_ocr/.\n\n\nCode\nlength(list.files(\"data_ocr\", pattern = \"\\\\.txt$\", full.names = TRUE))\n\n\n[1] 20"
+  },
+  {
+    "objectID": "index.html#шаг-2.-очистка-текста-регулярными-выражениями",
+    "href": "index.html#шаг-2.-очистка-текста-регулярными-выражениями",
+    "title": "Итоговый проект — Вариант 1: корпусный анализ с визуализацией",
+    "section": "Шаг 2. Очистка текста регулярными выражениями",
+    "text": "Шаг 2. Очистка текста регулярными выражениями\nПосле OCR в тексте обычно есть мусор: странные переносы, лишние пробелы, артефакты форматирования. Я почистила это регулярными выражениями, чтобы потом нормально считать статистику.\nЧто делала (основные правила):\n\nнормализация переносов строк (\\\\r\\\\n → \\\\n)\nсклейка переносов с дефисом: exam-\\\\nple → example\nсхлопывание лишних пробелов\nприведение пустых строк к аккуратным абзацам\n\n\nПример до/после (кусок одного файла)\n\n\nCode\nf_raw &lt;- list.files(\"data_ocr\", pattern=\"\\\\.txt$\", full.names=TRUE)[1]\nf_clean &lt;- file.path(\"data_clean\", basename(f_raw))\n\ncat(\"=== ДО ОЧИСТКИ (OCR) ===\\n\")\n\n\n=== ДО ОЧИСТКИ (OCR) ===\n\n\nCode\ncat(paste(readLines(f_raw, warn=FALSE)[1:10], collapse=\"\\n\"))\n\n\n2. What is Culture?\nI sit with several students in a café in Paris.\nWe have an international meeting. Americans, French, and Germans sit at\na table and discuss.\nThe American asks, \"What does culture mean in this country?\"\nI say, \"That term can mean a lot. Literature, theatre, art, or even the way we\nspeak, including the way you conduct yourself.\"\n\"Does it also include behavior? \" asks the American.\n\"Behavior in general terms, probably is a part of it,\" says the German.\n\"So that means when I behave I have culture,\" ask the American smiling.\n\n\nCode\ncat(\"\\n\\n=== ПОСЛЕ ОЧИСТКИ (clean) ===\\n\")\n\n\n\n\n=== ПОСЛЕ ОЧИСТКИ (clean) ===\n\n\nCode\ncat(paste(readLines(f_clean, warn=FALSE)[1:10], collapse=\"\\n\"))\n\n\n2. What is Culture?\nI sit with several students in a café in Paris.\nWe have an international meeting. Americans, French, and Germans sit at\na table and discuss.\nThe American asks, \"What does culture mean in this country?\"\nI say, \"That term can mean a lot. Literature, theatre, art, or even the way we\nspeak, including the way you conduct yourself.\"\n\"Does it also include behavior? \" asks the American.\n\"Behavior in general terms, probably is a part of it,\" says the German.\n\"So that means when I behave I have culture,\" ask the American smiling."
+  },
+  {
+    "objectID": "index.html#шаг-3.-udpipe-лемматизация-и-частотный-словарь",
+    "href": "index.html#шаг-3.-udpipe-лемматизация-и-частотный-словарь",
+    "title": "Итоговый проект — Вариант 1: корпусный анализ с визуализацией",
+    "section": "Шаг 3. UDPipe: лемматизация и частотный словарь",
+    "text": "Шаг 3. UDPipe: лемматизация и частотный словарь\nОчищенные тексты я разметила через udpipe (модель: english-ewt). Потом я сделала частотный словарь по леммам.\nЛеммы мне нужны, потому что одно и то же слово может быть в разных формах, и так проще считать.\n\nТоп-50 лемм\n\n\nCode\nlibrary(readr)\n\nlemma_path &lt;- \"outputs/tables/lemma_freq_top50.csv\"\nif (!file.exists(lemma_path)) {\n  stop(\"Не найден файл: \", lemma_path, \"\\nПроверь, что пайплайн создал outputs/tables/lemma_freq_top50.csv\")\n}\nlemma_top50 &lt;- read_csv(lemma_path, show_col_types = FALSE)\nlemma_top50\n\n\n# A tibble: 50 × 2\n   lemma     n\n   &lt;chr&gt; &lt;dbl&gt;\n 1 the     174\n 2 be      138\n 3 a       111\n 4 and     100\n 5 to       81\n 6 i        76\n 7 in       59\n 8 we       59\n 9 have     48\n10 of       48\n# ℹ 40 more rows\n\n\nФайлы шага:\n\noutputs/tables/udpipe_tokens.csv\noutputs/tables/lemma_freq_total.csv\noutputs/tables/lemma_freq_top50.csv"
+  },
+  {
+    "objectID": "index.html#шаг-4.-коллокации-и-визуализация",
+    "href": "index.html#шаг-4.-коллокации-и-визуализация",
+    "title": "Итоговый проект — Вариант 1: корпусный анализ с визуализацией",
+    "section": "Шаг 4. Коллокации и визуализация",
+    "text": "Шаг 4. Коллокации и визуализация\nДальше я искала коллокации (устойчивые сочетания). Я брала биграммы (соседние леммы внутри предложения) и считала PMI.\nPMI показывает, насколько пара слов встречается вместе чаще, чем “случайно”.\n\nТоп-20 коллокаций по PMI\n\nВ топе получились нормальные пары (типа “food poisoning”, “cable tv”, “old people”), а ещё частые связки вроде “of course”, “do not”, “such as”.\n\n\nСеть коллокаций (top-50)\n\nСеть просто помогает посмотреть, какие слова часто “цепляются” друг за друга и образуют группы.\nПолная таблица коллокаций:\n\n\nCode\nlibrary(dplyr)\n\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\n\nCode\nlibrary(readr)\n\ncoll_path &lt;- \"outputs/tables/collocations_pmi.csv\"\nif (!file.exists(coll_path)) {\n  stop(\"Не найден файл: \", coll_path, \"\\nПроверь, что пайплайн создал outputs/tables/collocations_pmi.csv\")\n}\ncoll &lt;- read_csv(coll_path, show_col_types = FALSE)\ncoll %&gt;% head(10)\n\n\n# A tibble: 10 × 6\n   w1     w2            n    n1    n2   pmi\n   &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1 food   poisoning     3     4     3  9.54\n 2 cable  tv            3     4     6  8.54\n 3 come   from          4     6    11  7.50\n 4 this   book          4    19     4  7.30\n 5 old    people        6     9    13  7.26\n 6 such   as            3     3    24  6.96\n 7 save   time          3     7    11  6.86\n 8 most   visit         3    16     5  6.81\n 9 as     well          6    25     7  6.68\n10 finish my            3     4    23  6.60"
+  },
+  {
+    "objectID": "index.html#итог",
+    "href": "index.html#итог",
+    "title": "Итоговый проект — Вариант 1: корпусный анализ с визуализацией",
+    "section": "Итог",
+    "text": "Итог\n\nЯ сделала OCR для 20 PDF и получила тексты.\nЯ почистила тексты регулярками.\nЯ построила частотный словарь лемм.\nЯ нашла коллокации и сделала две визуализации: топ-20 по PMI и сеть."
+  }
+]
