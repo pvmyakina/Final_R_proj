@@ -1,4 +1,3 @@
-# R/01_ocr.R
 source("R/00_config.R")
 
 pkgs <- c("pdftools", "tesseract", "stringr", "readr")
