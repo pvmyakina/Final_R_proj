@@ -25,18 +25,16 @@ tok <- anno %>%
   filter(!is.na(lemma2)) %>%
   transmute(w1 = lemma, w2 = lemma2)
 
-b <- tok %>% count(w1, w2, name = "n")
-w1 <- tok %>% count(w1, name = "n1")
-w2 <- tok %>% count(w2, name = "n2") %>% rename(w2 = w1)
+b  <- tok %>% count(w1, w2, name = "n")
+c1 <- tok %>% count(w1, name = "n1")
+c2 <- tok %>% count(w2, name = "n2")
 
 N <- nrow(tok)
 
 coll <- b %>%
-  left_join(w1, by = "w1") %>%
-  left_join(w2, by = "w2") %>%
-  mutate(
-    pmi = log2((n / N) / ((n1 / N) * (n2 / N)))
-  ) %>%
+  left_join(c1, by = "w1") %>%
+  left_join(c2, by = "w2") %>%
+  mutate(pmi = log2((n / N) / ((n1 / N) * (n2 / N)))) %>%
   filter(n >= 3) %>%
   arrange(desc(pmi))
 
