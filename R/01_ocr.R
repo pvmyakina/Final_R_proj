@@ -16,7 +16,10 @@ ocr_one_pdf <- function(pdf_path, out_txt, lang) {
   dir.create(tmpdir)
   on.exit(unlink(tmpdir, recursive = TRUE), add = TRUE)
 
-  imgs <- pdftools::pdf_convert(pdf_path, format = "png", dpi = 300, output_dir = tmpdir)
+  out_png <- file.path(tmpdir, "page1.png")
+
+  imgs <- pdftools::pdf_convert(pdf_path, format = "png", dpi = 300, filenames = out_png)
+
   eng <- tesseract::tesseract(lang)
   txt <- tesseract::ocr(imgs[1], engine = eng)
 
